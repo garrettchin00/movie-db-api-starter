@@ -47,11 +47,8 @@ function getPopularMovies(){
             // add the html to the page
             popularMovies.innerHTML = html;
 
-            // date object for adding release dates
-            let date;
         }
     });
-    
     
     // set the response type
     xhr.responseType = "json";
@@ -77,7 +74,7 @@ function getBirthYearMovies(e){
         birthYearMovies.innerHTML = `<p style="color: red; background-color: white;">Please enter a year between 1940 and 2026</p>`;
     }else{
         // Build the endpoint we need (this one has additional parameters)
-        let url = `https://api.themoviedb.org/3/discover/movie?api_key=d9ffdd2e47f72049e9bf9e8cd2c71641&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_year=${year}&sort_by=revenue.desc`;
+        let url = `https://api.themoviedb.org/3/discover/movie?api_key=d9ffdd2e47f72049e9bf9e8cd2c71641&language=en-US&include_adult=false&include_video=false&page=1&primary_release_year=${year}&sort_by=revenue.desc`;
         let imgUrl = "https://image.tmdb.org/t/p/w400";
 
         // ajax time!
@@ -97,34 +94,13 @@ function getBirthYearMovies(e){
                         continue;
                     }else{
                         html += `<section class="yrMovie">
-                                    <img src="${"TO DO"}" alt="">
-                                    <h3>${"TO DO"}</h3>
-                                    <p>Released: ${"ADD MONTH"}-${"ADD DAY OF MONTH"}-${"ADD YEAR"}</p>
+                                    <img src="${imgUrl}${movie.poster_path}" alt="">
+                                    <h3>${movie.title}</h3>
                                 </section>`; 
                     }
                 }
-            // check for ready state
-            // TO DO
-
-                // This code can be used for the display of the movies from the given year
-                // It skips any movies that don't include a poster
-            
-                for(let i = 0; i < 12; i++){
-                    if(json.results[i].poster_path === null){
-                        continue;
-                    }else{
-                        // create/assign date object to store release date for movie
-                        let date;
-                    
-                        html += `<section class="yrMovie">
-                            <img src="${"TO DO"}" alt="">
-                            <h3>${"TO DO"}</h3>
-                            <p>Released: ${"ADD MONTH"}-${"ADD DAY OF MONTH"}-${"ADD YEAR"}</p>
-                        </section>`; 
-                    }
-                }
                 // add output to the page
-                document.getElementById("birthYearMovies").innerHTML = html;
+                birthYearMovies.innerHTML = html;
 
             }
         });
