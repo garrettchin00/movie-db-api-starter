@@ -73,10 +73,10 @@ function getBirthYearMovies(e){
     // the place on the page where we'll add the movies
     let birthYearMovies = document.getElementById("birthYear");
 
-    if(year < 1940 || year > 2024 || year == ""){
-        birthYearMovies.innerHTML = `<p style="color: red; background-color: white;">Please enter a year between 1940 and 2022</p>`;
+    if(year < 1940 || year > 2026 || year == ""){
+        birthYearMovies.innerHTML = `<p style="color: red; background-color: white;">Please enter a year between 1940 and 2026</p>`;
     }else{
-        // TO DO - Build the endpoint we need (this one has additional parameters)
+        // Build the endpoint we need (this one has additional parameters)
         let url = `https://api.themoviedb.org/3/discover/movie?api_key=d9ffdd2e47f72049e9bf9e8cd2c71641&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_year=${year}&sort_by=revenue.desc`;
         let imgUrl = "https://image.tmdb.org/t/p/w400";
 
@@ -85,8 +85,24 @@ function getBirthYearMovies(e){
         let xhr = new XMLHttpRequest();
 
         // attach event handlers
-        // TO DO
+        xhr.addEventListener("readystatechange", function(){
+            if(this.readyState === this.DONE){
+                let json = this.response;
+                
+                let html = "";
+                let counter = 0;
 
+                for(let movie of json.results){
+                    if(movie.poster_path === null){
+                        continue;
+                    }else{
+                        html += `<section class="yrMovie">
+                                    <img src="${"TO DO"}" alt="">
+                                    <h3>${"TO DO"}</h3>
+                                    <p>Released: ${"ADD MONTH"}-${"ADD DAY OF MONTH"}-${"ADD YEAR"}</p>
+                                </section>`; 
+                    }
+                }
             // check for ready state
             // TO DO
 
@@ -105,25 +121,20 @@ function getBirthYearMovies(e){
                             <h3>${"TO DO"}</h3>
                             <p>Released: ${"ADD MONTH"}-${"ADD DAY OF MONTH"}-${"ADD YEAR"}</p>
                         </section>`; 
-                    } // close else
-                } // close for loop
+                    }
+                }
                 // add output to the page
-                // birthYearMovies.innerHTML = html;
+                document.getElementById("birthYearMovies").innerHTML = html;
 
-            // close ready state conditional
-            // TO DO
-
-        // close event handler
-        // TO DO
+            }
+        });
         
         // set the response type
-        // TO DO
+        xhr.responseType = "json";
         // open the request
-        // TO DO
-        // attach the headers (optional)
-
+        xhr.open("GET", url);
         // send the request
-        // TO DO
+        xhr.send();
     }
 }
 
