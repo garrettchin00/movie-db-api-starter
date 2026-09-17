@@ -3,14 +3,14 @@
 function getPopularMovies(){
     // the endpoint
     let url = "https://api.themoviedb.org/3/movie/popular?api_key=d9ffdd2e47f72049e9bf9e8cd2c71641&language=en-US&page=1";
+    
     // the place on the page where we'll display the movies
     let popularMovies = document.getElementById("popular");
     let imgUrl = "https://image.tmdb.org/t/p/w400";
 
-
     // ajax time!
     // create the object
-    let xhr = XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
 
     // attach event handlers
     xhr.addEventListener("readystatechange", function(){
@@ -47,28 +47,21 @@ function getPopularMovies(){
             // add the html to the page
             popularMovies.innerHTML = html;
 
-        // close the conditional that checks ready state
-        // TO DO
-
             // date object for adding release dates
             let date;
-
-    // close the event handler
-    // TO DO
+        }
+    });
     
-        
-    */
+    
     // set the response type
-    // TO DO
+    xhr.responseType = "json";
     
     // open the request
-    // TO DO
+    xhr.open("GET", url);
 
     // send the request
-    // TO DO
-        }
-    }    
-});
+    xhr.send();
+}   
 
 // function runs only after a year is entered/chosen and submitted through the form
 // endpoint here: https://developer.themoviedb.org/reference/discover-movie
@@ -76,7 +69,7 @@ function getBirthYearMovies(e){
     e.preventDefault();
 
     // Get the user's input/year value
-    // TO DO
+    let year = encodeURI(document.getElementById("userYear").value);
     // the place on the page where we'll add the movies
     let birthYearMovies = document.getElementById("birthYear");
 
@@ -84,12 +77,12 @@ function getBirthYearMovies(e){
         birthYearMovies.innerHTML = `<p style="color: red; background-color: white;">Please enter a year between 1940 and 2022</p>`;
     }else{
         // TO DO - Build the endpoint we need (this one has additional parameters)
-        // TO DO
+        let url = `https://api.themoviedb.org/3/discover/movie?api_key=d9ffdd2e47f72049e9bf9e8cd2c71641&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_year=${year}&sort_by=revenue.desc`;
         let imgUrl = "https://image.tmdb.org/t/p/w400";
 
         // ajax time!
         // create the object
-        // TO DO
+        let xhr = new XMLHttpRequest();
 
         // attach event handlers
         // TO DO
@@ -97,7 +90,6 @@ function getBirthYearMovies(e){
             // check for ready state
             // TO DO
 
-            /*
                 // This code can be used for the display of the movies from the given year
                 // It skips any movies that don't include a poster
             
@@ -115,7 +107,6 @@ function getBirthYearMovies(e){
                         </section>`; 
                     } // close else
                 } // close for loop
-            */
                 // add output to the page
                 // birthYearMovies.innerHTML = html;
 
