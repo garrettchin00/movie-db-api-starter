@@ -2,7 +2,7 @@
 // endpoint here: https://developer.themoviedb.org/reference/movie-popular-list
 function getPopularMovies(){
     // the endpoint
-    // TO DO
+    let url = "https://api.themoviedb.org/3/movie/popular?api_key=d9ffdd2e47f72049e9bf9e8cd2c71641&language=en-US&page=1";
     // the place on the page where we'll display the movies
     let popularMovies = document.getElementById("popular");
     let imgUrl = "https://image.tmdb.org/t/p/w400";
@@ -10,53 +10,48 @@ function getPopularMovies(){
 
     // ajax time!
     // create the object
-    // TO DO
+    let xhr = XMLHttpRequest();
 
     // attach event handlers
-    // TO DO
+    xhr.addEventListener("readystatechange", function(){
+        if(this.readyState === this.DONE){
+            let json = this.response;
 
-        // conditional to check the ready status of the call
-        // TO DO
-
-            // date object for adding release dates
-            let date;
-            /*
+            let html = "";
+                
                 // This code can be used for the display of the featured movie
                 // (it is a string template)
-                 html += `<section id="featured">
-                    <h3>${"TO DO"}</h3>
-                    <img src="${"TO DO"}" alt="">
-                    <p>Released: ${"ADD MONTH"}-${"ADD DAY OF MONTH"}-${"ADD YEAR"}</p>
-                    <p>"${"TO DO"}"</p>
+                html += `<section id="featured">
+                    <h3>${json.results[0].title}</h3>
+                    <img src="${imgUrl}${json.results[0].poster_path}" alt="">
+                    <p>"${json.results[0].overview}"</p>
                 </section>`;
 
-                // loop through array of movies to add 18 more to the page after the featured movie
-                // TO DO
-
-                    // reassign the date object for current movie's date
-                    // TO DO
+            // loop through array of movies to add 18 more to the page after the featured movie
+            for(let i = 1; i < 19; i++){
         
-                    // This code can be used for the display of the other popular movies (18 of them)
-                    // (it is a string template)
+                // This code can be used for the display of the other popular movies (18 of them)
+                // (it is a string template)
                     html += `<section class="movie">
-                        <img src="${"TO DO"}" alt="">
+                        <img src="${imgUrl}${json.results[i].poster_path}" alt="">
                         <div>
-                            <h3>${"TO DO"}</h3>
-                            <p>Released: ${"ADD MONTH"}-${"ADD DAY OF MONTH"}-${"ADD YEAR"}</p>
-                            <p>${"TO DO"}
-                                <span class="vote">Vote Average: ${"TO DO"}</span>
+                            <h3>${json.results[i].title}</h3>
+                            <p>Released: ${json.results[i].release_date}</p>
+                            <p>${json.results[i].overview}
+                                <span class="vote">Vote Average: ${json.results[i].vote_average}</span>
                             </p>
                         </div>
                     </section>`;
-
-            // close the output loop
-            // TO DO
+            }
         
             // add the html to the page
             popularMovies.innerHTML = html;
 
         // close the conditional that checks ready state
         // TO DO
+
+            // date object for adding release dates
+            let date;
 
     // close the event handler
     // TO DO
@@ -71,7 +66,9 @@ function getPopularMovies(){
 
     // send the request
     // TO DO
-}
+        }
+    }    
+});
 
 // function runs only after a year is entered/chosen and submitted through the form
 // endpoint here: https://developer.themoviedb.org/reference/discover-movie
